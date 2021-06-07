@@ -13,7 +13,7 @@ import {
   StatusBar,
 } from 'react-native';
 import SvgUri from 'expo-svg-uri';
-
+import moment from 'moment';
 const {width, height} = Dimensions.get('window');
 import GetJWT from '../services/getJWS';
 
@@ -22,15 +22,20 @@ const Statistics = () => {
   const jwt = useSelector(state => state.jwt);
   const [year, setYear] = React.useState('2021');
   const [month, setMonth] = React.useState('6');
+    let options = {
+      month: 'long',
+    };
   const [url, setUrl] = React.useState(
-    `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month}`,
+    `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month.toLocaleString('default',{options})}`,
   );
+  
+
   const {data, error} = GetJWT(url, jwt);
   console.log('statistics/data', data);
   const moveMonths = differ => {
     if (differ === 1 || differ === -1) {
-      let newMonth = Number(month) + differ;
-      let newYear = Number(year);
+      let newMonth = parseInt(month) + differ;
+      let newYear = parseInt(year);
       if (newMonth === 13) {
         newMonth = 1;
         newYear++;
@@ -43,10 +48,14 @@ const Statistics = () => {
       setYear(newYear);
       setMonth(newMonth);
       setUrl(
-        `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month}`,
+        `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month.toLocaleString(
+          'default',
+          {options},
+        )}`,
       );
     }
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -119,7 +128,11 @@ const Statistics = () => {
                 justifyContent: 'center',
                 alignSelf: 'center',
               }}>
-              <Text>Total Spent in {month}</Text>
+              <Text>
+                <Text>
+                  Total Spent in {month.toLocaleString('default', options)}
+                </Text>
+              </Text>
               <Text
                 style={{
                   textAlign: 'center',
