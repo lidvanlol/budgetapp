@@ -20,15 +20,14 @@ import GetJWT from '../services/getJWS';
 import {useSelector} from 'react-redux';
 const Statistics = () => {
   const jwt = useSelector(state => state.jwt);
-  const [year, setYear] = React.useState('2021');
-  const [month, setMonth] = React.useState('6');
-    let options = {
-      month: 'long',
-    };
+  const [year, setYear] = React.useState(2021);
+  const [month, setMonth] = React.useState(6);
+  let options = {
+    month: 'long',
+  };
   const [url, setUrl] = React.useState(
-    `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month.toLocaleString('default',{options})}`,
+    `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month}`,
   );
-  
 
   const {data, error} = GetJWT(url, jwt);
   console.log('statistics/data', data);
@@ -48,14 +47,10 @@ const Statistics = () => {
       setYear(newYear);
       setMonth(newMonth);
       setUrl(
-        `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month.toLocaleString(
-          'default',
-          {options},
-        )}`,
+        `https://budgetapp.digitalcube.rs/api/transactions/statistics?year=${year}&month=${month}`,
       );
     }
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,7 +125,8 @@ const Statistics = () => {
               }}>
               <Text>
                 <Text>
-                  Total Spent in {month.toLocaleString('default', options)}
+                  Total Spent in{' '}
+                  {month.toLocaleString('default', {month: 'long'})}
                 </Text>
               </Text>
               <Text

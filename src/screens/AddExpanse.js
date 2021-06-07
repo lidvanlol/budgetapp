@@ -48,7 +48,7 @@ const AddExpanse = ({navigation}) => {
       setSendError(answer);
       // console.log(answer)
     } else {
-      navigation.push('Wallet', inputObject);
+      navigation.push('Wallet');
     }
   };
 
