@@ -20,8 +20,8 @@ import GetJWT from '../services/getJWS';
 import {useSelector} from 'react-redux';
 const Statistics = () => {
   const jwt = useSelector(state => state.jwt);
-  const [year, setYear] = React.useState(2021);
-  const [month, setMonth] = React.useState(6);
+  const [year, setYear] = React.useState('2021');
+  const [month, setMonth] = React.useState('6');
   let options = {
     month: 'long',
   };
